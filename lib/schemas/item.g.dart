@@ -12,12 +12,15 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
     ObjectId id,
     String text,
     bool done,
-    String userId,
-  ) {
+    String userId, {
+    Iterable<String> sharedWith = const [],
+  }) {
     RealmObjectBase.set(this, '_id', id);
     RealmObjectBase.set(this, 'text', text);
     RealmObjectBase.set(this, 'done', done);
     RealmObjectBase.set(this, 'user_id', userId);
+    RealmObjectBase.set<RealmList<String>>(
+        this, 'shared_with', RealmList<String>(sharedWith));
   }
 
   Item._();
@@ -43,6 +46,13 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
   set userId(String value) => RealmObjectBase.set(this, 'user_id', value);
 
   @override
+  RealmList<String> get sharedWith =>
+      RealmObjectBase.get<String>(this, 'shared_with') as RealmList<String>;
+  @override
+  set sharedWith(covariant RealmList<String> value) =>
+      throw RealmUnsupportedSetError();
+
+  @override
   Stream<RealmObjectChanges<Item>> get changes =>
       RealmObjectBase.getChanges<Item>(this);
 
@@ -53,12 +63,14 @@ class Item extends _Item with RealmEntity, RealmObjectBase, RealmObject {
   static SchemaObject? _schema;
   static SchemaObject _initSchema() {
     RealmObjectBase.registerFactory(Item._);
-    return const SchemaObject(ObjectType.realmObject, Item, 'Item', [
+    return const SchemaObject(ObjectType.realmObject, Item, 'Items', [
       SchemaProperty('id', RealmPropertyType.objectid,
           mapTo: '_id', primaryKey: true),
       SchemaProperty('text', RealmPropertyType.string),
       SchemaProperty('done', RealmPropertyType.bool),
       SchemaProperty('userId', RealmPropertyType.string, mapTo: 'user_id'),
+      SchemaProperty('sharedWith', RealmPropertyType.string,
+          mapTo: 'shared_with', collectionType: RealmCollectionType.list),
     ]);
   }
 }

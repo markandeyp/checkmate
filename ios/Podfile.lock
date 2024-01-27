@@ -1,6 +1,6 @@
 PODS:
   - Flutter (1.0.0)
-  - realm (1.6.1):
+  - realm (1.7.0):
     - Flutter
 
 DEPENDENCIES:
@@ -15,7 +15,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  realm: d505e9a7b5c97a72ae3c008fb20099ac9516a07d
+  realm: 74f14d2e31a6d9b9950f3f61e6c0d24cec9ed261
 
 PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
 

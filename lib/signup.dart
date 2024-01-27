@@ -5,12 +5,12 @@ import 'package:realm/realm.dart';
 import 'package:checkmate/home.dart';
 import 'package:checkmate/services/item_service.dart';
 
-class LoginScreen extends StatelessWidget {
+class SignupScreen extends StatelessWidget {
   final UserService userService;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginScreen({Key? key, required this.userService}) : super(key: key);
+  SignupScreen({Key? key, required this.userService}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () async {
                     try {
                       final navigator = Navigator.of(context);
-                      User user = await userService.loginUser(
+                      User user = await userService.createUser(
                           emailController.text, passwordController.text);
                       navigator.pushReplacement(
                           MaterialPageRoute(builder: (BuildContext context) {
@@ -66,11 +66,11 @@ class LoginScreen extends StatelessWidget {
                       }));
                     } on RealmException catch (error) {
                       if (kDebugMode) {
-                        print("Error during login ${error.message}");
+                        print("Error during signup ${error.message}");
                       }
                     }
                   },
-                  child: const Text("Login", style: TextStyle(fontSize: 20)))
+                  child: const Text("Signup", style: TextStyle(fontSize: 20)))
             ],
           ),
         ),

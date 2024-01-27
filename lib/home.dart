@@ -6,12 +6,9 @@ import 'package:checkmate/services/item_service.dart';
 import 'package:checkmate/schemas/item.dart';
 
 class HomeScreen extends StatefulWidget {
-  final App atlasApp;
   final ItemService itemService;
 
-  const HomeScreen(
-      {Key? key, required this.atlasApp, required this.itemService})
-      : super(key: key);
+  const HomeScreen({Key? key, required this.itemService}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

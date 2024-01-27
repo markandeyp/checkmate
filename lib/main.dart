@@ -1,20 +1,23 @@
+import 'package:checkmate/services/user_service.dart';
+import 'package:checkmate/splash.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
-import 'package:checkmate/login.dart';
 
 const appId = "devicesync-tqile";
 
 void main() {
   final App atlasApp = App(AppConfiguration(appId));
+  final UserService userService = UserService(atlasApp);
   runApp(MyApp(
-    atlasApp: atlasApp,
+    userService: userService,
   ));
 }
 
 class MyApp extends StatelessWidget {
-  final App atlasApp;
+  final UserService userService;
 
-  const MyApp({super.key, required this.atlasApp});
+  const MyApp({super.key, required this.userService});
 
   @override
   Widget build(BuildContext context) {
@@ -22,9 +25,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Shopping List',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
-      home: LoginScreen(atlasApp: atlasApp),
+      home: SplashScreen(
+        userService: userService,
+      ),
     );
   }
 }
