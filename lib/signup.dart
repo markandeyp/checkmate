@@ -62,6 +62,7 @@ class SignupScreen extends StatelessWidget {
                           MaterialPageRoute(builder: (BuildContext context) {
                         return HomeScreen(
                           itemService: ItemService(user),
+                          userService: userService,
                         );
                       }));
                     } on RealmException catch (error) {

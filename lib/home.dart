@@ -1,3 +1,5 @@
+import 'package:checkmate/services/user_service.dart';
+import 'package:checkmate/splash.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:realm/realm.dart';
@@ -7,8 +9,11 @@ import 'package:checkmate/schemas/item.dart';
 
 class HomeScreen extends StatefulWidget {
   final ItemService itemService;
+  final UserService userService;
 
-  const HomeScreen({Key? key, required this.itemService}) : super(key: key);
+  const HomeScreen(
+      {Key? key, required this.itemService, required this.userService})
+      : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -27,7 +32,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Shopping List")),
+      appBar: AppBar(
+        title: const Text("Shopping List"),
+        actions: [
+          IconButton(
+              onPressed: () async {
+                try {
+                  final navigator = Navigator.of(context);
+                  await widget.userService.logoutUser();
+                  navigator.pushReplacement(
+                      MaterialPageRoute(builder: (BuildContext context) {
+                    return SplashScreen(
+                      userService: widget.userService,
+                    );
+                  }));
+                } on RealmException catch (error) {
+                  if (kDebugMode) {
+                    print("Error during logout ${error.message}");
+                  }
+                }
+              },
+              icon: const Icon(
+                Icons.logout,
+                size: 30,
+              ))
+        ],
+      ),
       body: StreamBuilder(
         stream: allItems.changes,
         builder: (BuildContext context,

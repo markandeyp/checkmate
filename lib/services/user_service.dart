@@ -18,4 +18,8 @@ class UserService {
     Credentials credentials = Credentials.emailPassword(email, password);
     return atlasApp.logIn(credentials);
   }
+
+  Future<void> logoutUser() async {
+    return atlasApp.currentUser!.logOut();
+  }
 }
