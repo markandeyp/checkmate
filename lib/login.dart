@@ -18,61 +18,64 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(
-                Icons.shopping_bag,
-                size: 100,
-                color: Colors.blueAccent,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              const Text("Login",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(
-                height: 30,
-              ),
-              TextField(
-                  controller: emailController,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(
+                  Icons.shopping_bag,
+                  size: 100,
+                  color: Colors.blueAccent,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                const Text("Login",
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                const SizedBox(
+                  height: 30,
+                ),
+                TextField(
+                    controller: emailController,
+                    decoration: const InputDecoration(
+                        hintText: "Email", border: OutlineInputBorder())),
+                const SizedBox(
+                  height: 15,
+                ),
+                TextField(
+                  controller: passwordController,
                   decoration: const InputDecoration(
-                      hintText: "Email", border: OutlineInputBorder())),
-              const SizedBox(
-                height: 15,
-              ),
-              TextField(
-                controller: passwordController,
-                decoration: const InputDecoration(
-                    hintText: "Password", border: OutlineInputBorder()),
-                obscureText: true,
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(20)),
-                  onPressed: () async {
-                    try {
-                      final navigator = Navigator.of(context);
-                      User user = await userService.loginUser(
-                          emailController.text, passwordController.text);
-                      navigator.pushReplacement(
-                          MaterialPageRoute(builder: (BuildContext context) {
-                        return HomeScreen(
-                          itemService: ItemService(user),
-                          userService: userService,
-                        );
-                      }));
-                    } on RealmException catch (error) {
-                      if (kDebugMode) {
-                        print("Error during login ${error.message}");
+                      hintText: "Password", border: OutlineInputBorder()),
+                  obscureText: true,
+                ),
+                const SizedBox(
+                  height: 15,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(20)),
+                    onPressed: () async {
+                      try {
+                        final navigator = Navigator.of(context);
+                        User user = await userService.loginUser(
+                            emailController.text, passwordController.text);
+                        navigator.pushReplacement(
+                            MaterialPageRoute(builder: (BuildContext context) {
+                          return HomeScreen(
+                            itemService: ItemService(user),
+                            userService: userService,
+                          );
+                        }));
+                      } on RealmException catch (error) {
+                        if (kDebugMode) {
+                          print("Error during login ${error.message}");
+                        }
                       }
-                    }
-                  },
-                  child: const Text("Login", style: TextStyle(fontSize: 20)))
-            ],
+                    },
+                    child: const Text("Login", style: TextStyle(fontSize: 20)))
+              ],
+            ),
           ),
         ),
       ),
