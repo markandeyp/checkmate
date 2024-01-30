@@ -71,6 +71,10 @@ class SignupScreen extends StatelessWidget {
                         if (kDebugMode) {
                           print("Error during signup ${error.message}");
                         }
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(error.message)));
+                        }
                       }
                     },
                     child: const Text("Signup", style: TextStyle(fontSize: 20)))

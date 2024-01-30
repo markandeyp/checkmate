@@ -71,6 +71,10 @@ class LoginScreen extends StatelessWidget {
                         if (kDebugMode) {
                           print("Error during login ${error.message}");
                         }
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(error.message)));
+                        }
                       }
                     },
                     child: const Text("Login", style: TextStyle(fontSize: 20)))
