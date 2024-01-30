@@ -19,7 +19,8 @@ class ItemService {
   }
 
   RealmResults<Item> getItems() {
-    return realm.query<Item>("userId == '${user.id}'");
+    return realm.query<Item>(
+        "userId == '${user.id}' || sharedWith contains '${user.id}'");
   }
 
   add(String text) {
